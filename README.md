@@ -2,19 +2,15 @@
 
 ## Introduction
 
-This project is developed by NYPL team for Information technology project course of NYU.
+This project is developed by NYPL team [@Proneet27](https://github.com/Proneet27), [@DerrickBu](https://github.com/DerrickBu), [@xchen20](https://github.com/xchen20), [@joanne3634](https://github.com/joanne3634) for Information technology project course of NYU.
 
 We collaborate with New York Public library and come up with this project which could help their daily work.
 
 This course is taught by Professor Jean-Claude Franchitti and this project involves NLP (Natural language Processing)
 and some other technologies which is really crucial and helpful for our daily lives.
 
-## Setting up Development Environment
-To get started, download and install VirtualBox and Vagrant.
-Download [VirtualBox](https://www.virtualbox.org/)
-Download [Vagrant](https://www.vagrantup.com/)
-
-Clone the project to your development folder and create your Vagrant vm
+## Set up
+To get started, download and install [VirtualBox](https://www.virtualbox.org/) and [Vagrant](https://www.vagrantup.com/). Then clone the project to your development folder and invoke vagrant
 
 ```bash
     git clone git@github.com:ITP19NYPL/NYPL_Taxonomy_Application.git
@@ -25,13 +21,41 @@ Clone the project to your development folder and create your Vagrant vm
 ```
 
 ## Start Service
-You can see the service running in your browser by going to
-[http://localhost:5000](http://localhost:5000) after use the `honcho` command
-
 
 ```bash
     honcho start
 ```
+
+## View App with UI
+You can see the service running in your browser by going to
+[http://localhost:5000](http://localhost:5000) after use the `honcho` command
+
+## Swagger Restful API Doc
+
+[http://localhost:5000/apidocs/index.html](http://localhost:5000/apidocs/index.html)
+
+## API Endpoint
+
+##### Query top n similarity words of target_word
+
+- By target_word and number:  GET `/category?target_word={string:target_word}&number={int:number}`
+
+##### Create a new category
+
+- PATH: POST `/category`
+
+##### Get a category by a category id
+
+- PATH: GET `/category/{string:id} `
+
+##### List all categories
+
+- PATH: GET `/category`
+
+##### Delete a category
+
+- PATH: DELETE `/category/{string:id} `
+
 
 ## Testing
 Run the tests suite with:
