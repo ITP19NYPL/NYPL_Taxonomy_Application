@@ -11,7 +11,7 @@ and some other technologies which is really crucial and helpful for our daily li
 
 ## Setting up Development Environment
 To get started, download and install VirtualBox and Vagrant.
-Download [VirtualBox](https://www.virtualbox.org/
+Download [VirtualBox](https://www.virtualbox.org/)
 Download [Vagrant](https://www.vagrantup.com/)
 
 Clone the project to your development folder and create your Vagrant vm
@@ -27,6 +27,7 @@ Clone the project to your development folder and create your Vagrant vm
 ## Start Service
 You can see the service running in your browser by going to
 [http://localhost:5000](http://localhost:5000) after use the `honcho` command
+
 
 ```bash
     honcho start
