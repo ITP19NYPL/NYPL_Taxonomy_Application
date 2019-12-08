@@ -2,6 +2,7 @@ import numpy as np
 import pandas as pd
 import re
 import nltk
+nltk.download('wordnet')
 from nltk.stem import WordNetLemmatizer
 from gensim.models import word2vec
 from gensim.models.word2vec import Text8Corpus
@@ -32,7 +33,6 @@ class SimilarityModel:
         if "trian.model" in os.listdir("/vagrant/service/train/"):
             model = word2vec.Word2Vec.load("/vagrant/service/train/trian.model")
         else:
-            nltk.download('wordnet')
             model = word2vec.Word2Vec(sentences, size=150)
             model.save("/vagrant/service/train/trian.model")
         return model
