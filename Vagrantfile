@@ -60,6 +60,7 @@ Vagrant.configure(2) do |config|
     # Install app dependencies
     cd /vagrant
     pip3 install -r requirements.txt
+    python3 service/train.py
   SHELL
 
   ######################################################################
