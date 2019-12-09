@@ -11,6 +11,7 @@ and some other technologies which is really crucial and helpful for our daily li
 
 ## Set up
 To get started, download and install [VirtualBox](https://www.virtualbox.org/) and [Vagrant](https://www.vagrantup.com/). Then clone the project to your development folder and invoke vagrant
+Please note that first time vagrant up whould take some time for training nlp model
 
 ```bash
     git clone git@github.com:ITP19NYPL/NYPL_Taxonomy_Application.git
