@@ -4,7 +4,7 @@
 {% endblock %}
 
 {% block body %}
-    <div class="register">
+<!--     <div class="register">
       <form action="/search" method="POST" class="field">
         <input id="register" name = "target_word" maxlength="21" type="text" />
         <label for="register">
@@ -12,9 +12,37 @@
         </label>
         <button>OK</button>
       </form>
-    </div>
+    </div> -->
 
-  {% for i in range(0, len) %}
+<!--   <main class="container">
+  <section class="list-intro">
+  </section>
+  <section class="awesome-list">
+    <div class="awesome-list-item"><span>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</span></div>
+    <div class="awesome-list-item"><span>Illum placeat aut nam distinctio officiis dolore deset.</span></div>
+    <div class="awesome-list-item"><span>Dignissimos aliquam, velit odio magni mollitia quos recusate.</span></div>
+    <div class="awesome-list-item"><span>Labore quibusdam voluptatibus nobis minima reprehen.</span></div>
+  </section>
+</main> -->
+
+
+<main class="container">
+  <section class="list-intro">
+  </section>
+  <section class="awesome-list">
+    {% for i in range(0, len) %}
+    <div class="awesome-list-item">
+      {% if result[i] == None %}
+      <span>Result{{i}}</span>
+      {% else %}
+      <span>{{result[i]}}</span>
+      {% endif %}
+    </div>
+    {% endfor %}
+  </section>
+</main>
+  
+<!--   {% for i in range(0, len) %}
   <div class="r{{i+1}}">
     <label for="r{{i+1}}">
         {% if result[i] == None %}
@@ -25,7 +53,7 @@
     </label>
   </div>
   {% endfor %}
-
+ -->
   <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
   <script type="text/javascript" src="static/js/logic.js"></script>
 {% endblock %}
