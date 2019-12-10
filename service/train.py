@@ -1,14 +1,8 @@
 import numpy as np
 import pandas as pd
-import re
 import nltk
-nltk.download('wordnet')
-from nltk.stem import WordNetLemmatizer
-from gensim.models import word2vec
-from gensim.models.word2vec import Text8Corpus
-from gensim.test.utils import common_texts, get_tmpfile
-from gensim.models import Phrases
 import os
+
 import collections
 import heapq
 import functools
@@ -20,76 +14,83 @@ class Element:
         self.word = word
 
     def __lt__(self, other):
-        if self.similarity == other.similarity:
-            return self.word > other.word
         return self.similarity < other.similarity
 
     def __eq__(self, other):
-        return self.similarity == other.similarity and self.word == other.word
+        return np.logical_and(self.similarity == other.similarity, self.word == other.word)
 
 class SimilarityModel:
     def load_model():
-        sentences = word2vec.Text8Corpus('/vagrant/service/train/text8')
-        if "trian.model" in os.listdir("/vagrant/service/train/"):
-            model = word2vec.Word2Vec.load("/vagrant/service/train/trian.model")
+        from gensim.models import KeyedVectors
+        if "train.model" in os.listdir("/vagrant/service/train/"):
+            model = KeyedVectors.load("/vagrant/service/train/train.model", mmap='r')
         else:
-            model = word2vec.Word2Vec(sentences, size=150)
-            model.save("/vagrant/service/train/trian.model")
+            model = KeyedVectors.load_word2vec_format('/vagrant/service/train/GoogleNews-vectors-negative300.bin', binary=True, limit=300000)
+            model.save("/vagrant/service/train/train.model")
         return model
 
-    def text_cleaner(text):
-        rules = [
-            {r'>\s+': u'>'},  # remove spaces after a tag opens or closes
-            {r'\s+': u' '},  # replace consecutive spaces
-            {r'\s*<br\s*/?>\s*': u'\n'},  # newline after a <br>
-            {r'</(div)\s*>\s*': u'\n'},  # newline after </p> and </div> and <h1/>...
-            {r'</(p|h\d)\s*>\s*': u'\n\n'},  # newline after </p> and </div> and <h1/>...
-            {r'<head>.*<\s*(/head|body)[^>]*>': u''},  # remove <head> to </head>
-            {r'<a\s+href="([^"]+)"[^>]*>.*</a>': r'\1'},  # show links instead of texts
-            {r'[ \t]*<[^<]*?/?>': u''},  # remove remaining tags
-            {r'^\s+': u''},  # remove spaces at the beginning
-            {r'[\(\)]' : u''}
-        ]
-        for rule in rules:
-         for (k, v) in rule.items():
-            regex = re.compile(k)
-            text = regex.sub(v, text)
-        text = text.rstrip()
-        return text.lower()
+    def cos_sim(a, b):
+    	"""
+        Takes 2 vectors a, b and returns the cosine similarity according
+    	to the definition of the dot product
+    	"""
+    	dot_product = np.dot(a, b)
+    	norm_a = np.linalg.norm(a)
+    	norm_b = np.linalg.norm(b)
+    	return dot_product / (norm_a * norm_b)
 
-    def load_categories():
+    def convert(string):
+        li = list(string.split(" "))
+        return li
+
+    def category_embeddings(df, model):
+        if "category_embeddings.dat" in os.listdir("/vagrant/service/train/"):
+            category_embeddings = np.load("/vagrant/service/train/category_embeddings.dat")
+        else:
+            from functools import reduce
+            category_embeddings = {}
+            for index,row in df.iterrows():
+                list_of_words = [word for word in row if word is not np.nan]
+                category = [reduce(lambda x,y: x+' '+y,list_of_words)]
+                word_embedding_per_row = 0
+                for word in list_of_words:
+                    try:
+                        word_embedding_per_row  = word_embedding_per_row + model[word]
+                    except:
+                        pass
+                category_embeddings.update({category[0]:word_embedding_per_row})
+            np.save('/vagrant/service/train/category_embeddings.dat', category_embeddings)
+        return category_embeddings
+
+    def top_k_similarity(query, k):
         path = "/vagrant/service/train/Categories.csv"
-        L=[]
-        df = pd.read_csv(path, encoding='latin-1')
-        for example in df.categories:
-            df1 = SimilarityModel.text_cleaner(example.lower())
-            L.append(df1)
-        dfnew = pd.DataFrame(L, columns=['category'])
-        L2=[]
-        for example in dfnew.category:
-            lemm = WordNetLemmatizer().lemmatize(example)
-            L2.append(lemm)
-        df3 = pd.DataFrame(L2, columns=['category'])
-        df3["category"] = df3["category"].str.split(" ", n = 2, expand = True)
-        return df3.category.unique()
-
-    def top_k_similarity(word, k):
+        df = pd.read_csv(path, encoding='latin-1').iloc[:,:-1]
         model = SimilarityModel.load_model()
-        categories = SimilarityModel.load_categories()
-        similarities = []
-        heapq.heapify(similarities)
-        for example in categories:
+        category_embeddings = SimilarityModel.category_embeddings(df, model)
+        text = SimilarityModel.convert(query)
+        word_embedding = 0
+        for word in text:
             try:
-                similarity1 = model.similarity(word,example)
-                heapq.heappush(similarities, (Element(similarity1, example), example))
-                if len(similarities) > k:
-                    heapq.heappop(similarities)
+                word_embedding  = (word_embedding + model[word])/len(text)
             except:
                 pass
+        similarities = []
+        heapq.heapify(similarities)
+        text_input = word_embedding
+        for keys,example in category_embeddings.items():
+            if type(example)!=int:
+                try:
+                    cos_lib = SimilarityModel.cos_sim(text_input,example)
+                    heapq.heappush(similarities, (Element(cos_lib, keys), keys))
+                    if len(similarities) > k:
+                        heapq.heappop(similarities)
+                except:
+                    pass
         res = []
-        if len(similarities) == k:
-            for _ in range(k):
-                res.append(heapq.heappop(similarities)[1])
+        for _ in range(len(similarities)):
+            res.append(heapq.heappop(similarities)[1])
         return res[::-1]
 
+print("TESTING... SIMILARITY OF LOVE : \n")
 print(SimilarityModel.top_k_similarity('love', 5))
+print("\n SUCCESS ...")

@@ -10,8 +10,7 @@ This course is taught by Professor Jean-Claude Franchitti and this project invol
 and some other technologies which is really crucial and helpful for our daily lives.
 
 ## Set up
-To get started, download and install [VirtualBox](https://www.virtualbox.org/) and [Vagrant](https://www.vagrantup.com/). Then clone the project to your development folder and invoke vagrant
-Please note that first time vagrant up whould take some time for training nlp model
+To get started, download and install [VirtualBox](https://www.virtualbox.org/) and [Vagrant](https://www.vagrantup.com/). Then clone the project to your development folder and invoke vagrant.
 
 ```bash
     git clone git@github.com:ITP19NYPL/NYPL_Taxonomy_Application.git
@@ -19,6 +18,17 @@ Please note that first time vagrant up whould take some time for training nlp mo
     vagrant up
     vagrant ssh
     cd /vagrant
+```
+
+## pre-train model
+Download the GoogleNew, and run train.py.
+
+```bash
+    cd /vagrant/service/train
+    wget -c "https://s3.amazonaws.com/dl4j-distribution/GoogleNews-vectors-negative300.bin.gz"
+    gunzip -f GoogleNews-vectors-negative300.bin.gz
+    cd /vagrant
+    python3 service/train.py
 ```
 
 ## Start Service
