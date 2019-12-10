@@ -33,10 +33,10 @@ body {
 .awesome-list-item::before {
   /* Display the counter and set the list style for the list. */
   content: counter(my-awesome-list, decimal-leading-zero);
-  background: #FFF;
-  border: 10px solid #2C3E50;
+  background: #ffbe85;
+  border: 10px solid #0567cf;
   border-radius: 50%;
-  color: #FFF;
+  color: #fff;
   display: inline-block;
   font-weight: bold;
   font-size: 1.8em;
@@ -73,7 +73,7 @@ body {
 }
 
 .list-intro {
-  background: #ffa500;
+  background: #0668cf;
   color: #FFF;
   box-sizing: border-box;
   display: inline-block;
@@ -88,18 +88,18 @@ body {
 }
 
 .awesome-list-item > span {
-  background: #ecf0f1;
+  background: #ffbe85;
   border-radius: 4px;
-  color: #FFF;
+  color: white;
   display: inline-block;
   position: relative;
   line-height: 2em;
   margin: 0 0 0 -2em;
-  padding: 1.2em 2em 1.2em 3em;
+  /* padding: 1.2em 2em 1.2em 3em; */
   vertical-align: middle;
   width: 800px;
   text-align: center;
-  font-size: 20px;
+  font-size: 35px;
 }
 
 .awesome-list-item > span::after {
@@ -129,39 +129,45 @@ body {
 }
 
 .awesome-list-item:nth-child(2)::before {
-  background: #0f9d58;
-  border-color: #f4b400;
-  box-shadow: 0 0 0 3px #0f9d58;
+  background: #ffbe85;
+  border-color: #0567cf;
+  box-shadow: 0 0 0 3px #ffbe85;
 }
 
 .awesome-list-item:nth-child(2) > span {
-  background: #ffe156;
+  background: #ffbe86;
 }
 
 .awesome-list-item:nth-child(3)::before {
-  background: #4285f4;
-  border-color: #0f9d58;
-  box-shadow: 0 0 0 3px #4285f4;
+  background: #ffe155;
+  border-color: #0567cf;
+  box-shadow: 0 0 0 3px #ffe155;
 }
 
 .awesome-list-item:nth-child(3) > span {
-  background: #ffe9ce;
+  background: #ffe156;
 }
 
 .awesome-list-item:nth-child(4)::before {
-  background: #db4437;
-  border-color: #4285f4;
-  box-shadow: 0 0 0 3px #db4437;
+  background: #ffb4c2;
+  border-color: #0567cf;
+  box-shadow: 0 0 0 3px #ffb4c2;
 }
 .awesome-list-item:nth-child(4) > span {
   background: #ffb5c2;
 }
 
 .awesome-list-item:nth-child(5)::before {
-  background: #f4b400;
-  border-color: #db4437;
-  box-shadow: 0 0 0 3px #f4b400;
+  background: #ffe155;
+  border-color: #0567cf;
+  box-shadow: 0 0 0 3px #ffe155;
 }
 .awesome-list-item:nth-child(5) > span {
-  background: #3777ff;
+  background: #ffe155;
+}
+
+.awesome-list-item:nth-child(6)::before {
+  background: #ffbe85;
+  border-color: #0567cf;
+  box-shadow: 0 0 0 3px #ffbe85;
 }
