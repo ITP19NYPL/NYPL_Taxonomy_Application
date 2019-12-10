@@ -22,6 +22,14 @@ body {
   position: relative;
 }
 
+.information {
+    font-size: 40px;
+    color: white;
+    position: relative;
+    text-align: center;
+    display: block;
+}
+
 .awesome-list-item {
    /* Increment the "my-awesome-list" counter for every list item. */
    counter-increment: my-awesome-list;
