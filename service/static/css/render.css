@@ -4,6 +4,31 @@ body {
   padding: 0;
 }
 
+
+h1 .h1color1 {
+  color: #ffbe86;
+  font-weight: bold;
+  font-size: 60px;
+}
+
+h1 .h1color2 {
+  color: #ffe156;
+  font-weight: bold;
+  font-size: 60px;
+}
+
+h1 .h1color3 {
+  color: #ffe9ce;
+  font-weight: bold;
+  font-size: 60px;
+}
+
+h1 .h1color4 {
+  color: #ffb5c2;
+  font-weight: bold;
+  font-size: 60px;
+}
+
 html,
 body {
   width: 100%;
