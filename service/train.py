@@ -1,8 +1,8 @@
 import numpy as np
+np.seterr(divide='ignore', invalid='ignore')
 import pandas as pd
 import nltk
 import os
-
 import collections
 import heapq
 import functools
@@ -81,9 +81,12 @@ class SimilarityModel:
             if type(example)!=int:
                 try:
                     cos_lib = SimilarityModel.cos_sim(text_input,example)
-                    heapq.heappush(similarities, (Element(cos_lib, keys), keys))
-                    if len(similarities) > k:
-                        heapq.heappop(similarities)
+                    if cos_lib is None or math.isnan(cos_lib):
+                        continue
+                    else:
+                        heapq.heappush(similarities, (Element(cos_lib, keys), keys))
+                        if len(similarities) > k:
+                            heapq.heappop(similarities)
                 except:
                     pass
         res = []
