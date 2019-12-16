@@ -29,6 +29,24 @@ h1 .h1color4 {
   font-size: 60px;
 }
 
+h1 .h1color5 {
+  color: #ffe9ce;
+  font-weight: bold;
+  font-size: 60px;
+}
+
+h1 .h1color6 {
+  color: #ffe156;
+  font-weight: bold;
+  font-size: 60px;
+}
+
+h1 .h1color7 {
+  color: #ffbe86;
+  font-weight: bold;
+  font-size: 60px;
+}
+
 html,
 body {
   width: 100%;
