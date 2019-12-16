@@ -1,7 +1,7 @@
 h1{
   font-size:50px;
   color:#fff
-  
+
 }
 body {
   background: linear-gradient(to bottom, #639EDB, #0668CF) no-repeat;
@@ -107,7 +107,7 @@ body {
   vertical-align: middle;
   width: 800px;
   text-align: center;
-  font-size: 35px;
+  font-size: 2em;
 }
 
 .awesome-list-item > span::after {

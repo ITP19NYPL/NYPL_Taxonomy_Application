@@ -1,5 +1,7 @@
 import numpy as np
 np.seterr(divide='ignore', invalid='ignore')
+
+import math
 import pandas as pd
 import nltk
 import os
@@ -65,6 +67,9 @@ class SimilarityModel:
     def top_k_similarity(query, k):
         path = "/vagrant/service/train/Categories.csv"
         df = pd.read_csv(path, encoding='latin-1').iloc[:,:-1]
+        loc_path = "/vagrant/service/train/location.csv"
+        location = pd.read_csv(loc_path, encoding='latin-1')
+
         model = SimilarityModel.load_model()
         category_embeddings = SimilarityModel.category_embeddings(df, model)
         text = SimilarityModel.convert(query)
@@ -77,23 +82,24 @@ class SimilarityModel:
         similarities = []
         heapq.heapify(similarities)
         text_input = word_embedding
+        i=0
         for keys,example in category_embeddings.items():
+            i=i+1
             if type(example)!=int:
                 try:
                     cos_lib = SimilarityModel.cos_sim(text_input,example)
-                    if cos_lib is None or math.isnan(cos_lib):
+                    if math.isnan(cos_lib):
                         continue
-                    else:
-                        heapq.heappush(similarities, (Element(cos_lib, keys), keys))
-                        if len(similarities) > k:
-                            heapq.heappop(similarities)
+                    heapq.heappush(similarities, (Element(cos_lib, keys), "Category: " + keys + ", Location: " + location.Location[i]))
+                    if len(similarities) > k:
+                        heapq.heappop(similarities)
                 except:
                     pass
         res = []
         for _ in range(len(similarities)):
             res.append(heapq.heappop(similarities)[1])
         return res[::-1]
-
+    
 print("TESTING... SIMILARITY OF LOVE : \n")
 print(SimilarityModel.top_k_similarity('love', 5))
 print("\n SUCCESS ...")
