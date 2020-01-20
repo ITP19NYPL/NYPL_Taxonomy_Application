@@ -9,6 +9,8 @@ We collaborate with New York Public library and come up with this project which 
 This course is taught by Professor Jean-Claude Franchitti and this project involves NLP (Natural language Processing)
 and some other technologies which is really crucial and helpful for our daily lives.
 
+All the deliverables can be found in the [sharing folder](https://drive.google.com/open?id=1F2129MiDaLzAa-kERRjKDVpU8Iph7SuT) including Business Model Canvas, Showcase Videos, Technical & Business Poster, Kickoff and Showcase decks, Flyer and Report.
+
 ## Set up
 To get started, download and install [VirtualBox](https://www.virtualbox.org/) and [Vagrant](https://www.vagrantup.com/). Then clone the project to your development folder and invoke vagrant.
 
