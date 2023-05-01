@@ -1,5 +1,5 @@
 # Runtime dependencies
-Flask==1.1.1
+Flask==2.3.2
 Flask-API==1.1
 gunicorn==19.9.0
 flask-restplus==0.13.0
