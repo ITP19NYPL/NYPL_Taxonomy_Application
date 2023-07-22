@@ -17,5 +17,5 @@ codecov==2.0.15
 #Text model
 sklearn==0.0
 pandas==0.25.3
-nltk==3.4.5
+nltk==3.6.6
 gensim==3.8.1
